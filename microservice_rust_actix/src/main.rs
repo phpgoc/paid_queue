@@ -9,7 +9,7 @@ async fn incr(  pool: web::Data<Pool<RedisConnectionManager>>)-> Result<HttpResp
     let mut conn = pool.get().unwrap();
     let n: i64 = conn.incr("k", 1).unwrap();
 
-    Ok(HttpResponse::Ok().body(format!("{}",n)))
+    Ok(HttpResponse::Ok().body(format!("k = {}",n)))
    
 }
 #[actix_web::main]

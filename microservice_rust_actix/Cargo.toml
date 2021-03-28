@@ -13,3 +13,11 @@ futures = "0.3"
 serde = { version = "1", features = ["derive"] }
 env_logger = "0.8"
 r2d2_redis = "0.14.0"
+
+[[bin]]
+name = "hello"
+path = "for_docker_build_bin/hello.rs"
+
+[[bin]]
+name = "pq"
+path = "src/bin/paid_queue.rs"
