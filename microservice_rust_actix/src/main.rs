@@ -1,9 +1,8 @@
-use actix::prelude::*;
-use actix_web::{middleware, web, App, Error as AWError, HttpResponse, HttpServer};
-use r2d2_redis::{r2d2, RedisConnectionManager};
-use r2d2_redis::redis::Commands;
-use r2d2_redis::r2d2::Pool;
+mod lib;
 
+// use actix::prelude::*;
+use actix_web::{middleware, web, App, Error as AWError, HttpResponse, HttpServer};
+use lib::redis_pool::*;
 async fn incr(  pool: web::Data<Pool<RedisConnectionManager>>)-> Result<HttpResponse, AWError> {
     // let res = redis.send(Command(resp_array!["INCR","k"])).await.unwrap().ok().unwrap();
     let mut conn = pool.get().unwrap();
@@ -16,10 +15,7 @@ async fn incr(  pool: web::Data<Pool<RedisConnectionManager>>)-> Result<HttpResp
 async fn main() -> std::io::Result<()> {
     std::env::set_var("RUST_LOG", "actix_web=trace,actix_redis=trace");
     env_logger::init();
-    let manager = RedisConnectionManager::new("redis://redis:6379").unwrap();
-    let pool = r2d2::Pool::builder()
-        .build(manager)
-        .unwrap();
+    let pool = get_pool();
     HttpServer::new(move || {
         App::new()
             .data(pool.clone())
