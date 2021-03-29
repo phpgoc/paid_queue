@@ -1,8 +1,7 @@
-mod lib;
-
+use microservice_rust_actix::*;
 // use actix::prelude::*;
 use actix_web::{middleware, web, App, Error as AWError, HttpResponse, HttpServer};
-use lib::redis_pool::*;
+use databases::redis_pool::*;
 async fn incr(  pool: web::Data<Pool<RedisConnectionManager>>)-> Result<HttpResponse, AWError> {
     // let res = redis.send(Command(resp_array!["INCR","k"])).await.unwrap().ok().unwrap();
     let mut conn = pool.get().unwrap();
