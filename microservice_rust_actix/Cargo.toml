@@ -14,6 +14,9 @@ serde = { version = "1", features = ["derive"] }
 env_logger = "0.8"
 r2d2_redis = "0.14.0"
 clap = "2.33.3"
+cli-table = "0.4"
+regex = "1"
+rand = "0.8.3"
 
 [[bin]]
 name = "hello"
